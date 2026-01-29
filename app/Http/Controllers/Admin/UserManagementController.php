@@ -30,22 +30,31 @@ class UserManagementController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role_id' => ['required', 'exists:roles,id'],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string'],
-            'is_active' => ['boolean'],
+            'is_active' => ['nullable', 'boolean'],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-        $validated['is_active'] = $request->has('is_active');
-
-        $user = User::create($validated);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role_id' => $validated['role_id'],
+            'phone' => $validated['phone'] ?? null,
+            'address' => $validated['address'] ?? null,
+            'is_active' => $request->has('is_active'),
+        ]);
 
         // Attach selected features
         if ($request->has('features')) {
             foreach ($request->features as $featureId) {
-                $user->features()->attach($featureId, ['is_enabled' => true]);
+                $user->features()->attach($featureId, [
+                    'is_enabled' => true,
+                    'can_edit' => true,
+                    'can_delete' => true,
+                ]);
             }
         }
 
@@ -85,7 +94,12 @@ class UserManagementController extends Controller
         $user->features()->detach();
         if ($request->has('features')) {
             foreach ($request->features as $featureId) {
-                $user->features()->attach($featureId, ['is_enabled' => true]);
+                // We keep defaults (can_edit=true, can_delete=true) for simplified admin creation
+                $user->features()->attach($featureId, [
+                    'is_enabled' => true,
+                    'can_edit' => true,
+                    'can_delete' => true,
+                ]);
             }
         }
 

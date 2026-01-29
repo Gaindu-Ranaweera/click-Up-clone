@@ -1,107 +1,130 @@
 <x-app-layout>
     <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h2 class="mb-4">Edit User: {{ $user->name }}</h2>
-
-            <div class="card">
+        <div class="col-md-8 grid-margin stretch-card mx-auto">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                    <h4 class="card-title text-primary"><i class="mdi mdi-account-edit me-2"></i>Edit User: {{ $user->name }}</h4>
+                    <p class="card-description"> Modify user details, roles, and module permissions. </p>
+                    
+                    <form action="{{ route('admin.users.update', $user) }}" method="POST" class="forms-sample">
                         @csrf
-                        @method('PUT')
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name *</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" name="name" value="{{ old('name', $user->name) }}" required>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" name="email" value="{{ old('email', $user->email) }}" required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password (leave blank to keep current)</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                   id="password" name="password">
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="role_id" class="form-label">Role *</label>
-                            <select class="form-select @error('role_id') is-invalid @enderror" 
-                                    id="role_id" name="role_id" required>
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
-                                        {{ ucfirst(str_replace('_', ' ', $role->name)) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('role_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="text" class="form-control @error('phone') is-invalid @enderror" 
-                                   id="phone" name="phone" value="{{ old('phone', $user->phone) }}">
-                            @error('phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control @error('address') is-invalid @enderror" 
-                                      id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
-                            @error('address')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="is_active" 
-                                       name="is_active" {{ old('is_active', $user->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">
-                                    Active
-                                </label>
+                        @method('PATCH')
+                        
+                        <!-- Name -->
+                        <div class="form-group row mb-4">
+                            <label for="name" class="col-sm-3 col-form-label fw-bold">Full Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="John Doe" value="{{ old('name', $user->name) }}" required>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Enabled Features</label>
-                            <div class="row">
-                                @foreach($features as $feature)
-                                <div class="col-md-6 mb-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" 
-                                               name="features[]" value="{{ $feature->id }}" 
-                                               id="feature_{{ $feature->id }}"
-                                               {{ in_array($feature->id, $userFeatures) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="feature_{{ $feature->id }}">
-                                            {{ $feature->name }}
-                                            <small class="text-muted d-block">{{ $feature->description }}</small>
-                                        </label>
+                        <!-- Email -->
+                        <div class="form-group row mb-4">
+                            <label for="email" class="col-sm-3 col-form-label fw-bold">Email Address</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="john@example.com" value="{{ old('email', $user->email) }}" required>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group row mb-4">
+                            <label for="phone" class="col-sm-3 col-form-label fw-bold">Mobile Number</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="+1 234 567 890" value="{{ old('phone', $user->phone) }}">
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group row mb-4">
+                            <label for="address" class="col-sm-3 col-form-label fw-bold">Address</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="3" placeholder="Enter full address">{{ old('address', $user->address) }}</textarea>
+                                @error('address')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Role Selection -->
+                        <div class="form-group row mb-4">
+                            <label for="role_id" class="col-sm-3 col-form-label fw-bold">System Role</label>
+                            <div class="col-sm-9">
+                                <select name="role_id" id="role_id" class="form-select @error('role_id') is-invalid @enderror" required>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
+                                            {{ ucfirst(str_replace('_', ' ', $role->name)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('role_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Password (Optional) -->
+                        <div class="form-group row mb-4 border-top pt-4">
+                            <label for="password" class="col-sm-3 col-form-label fw-bold">New Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Leave blank to keep current">
+                                <small class="text-muted">Only fill this if you want to change the user's password.</small>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Module Permissions -->
+                        <div class="form-group row mb-4">
+                            <label class="col-sm-3 col-form-label fw-bold">Enable Modules</label>
+                            <div class="col-sm-9 mt-2">
+                                <div class="row">
+                                    @foreach($features as $feature)
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check form-check-flat form-check-primary">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" name="features[]" value="{{ $feature->id }}" 
+                                                       {{ in_array($feature->id, $userFeatures) ? 'checked' : '' }}
+                                                       class="form-check-input">
+                                                {{ $feature->name }}
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
                                     </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">Update User</button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
+                        <!-- Active Toggle -->
+                        <div class="form-group row mb-4">
+                            <label class="col-sm-3 col-form-label fw-bold">Account Status</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-check-flat form-check-success mt-2">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="is_active" class="form-check-input" 
+                                               {{ $user->is_active ? 'checked' : '' }} value="1">
+                                        Active Account
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a href="{{ route('admin.users.index') }}" class="btn btn-light me-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="mdi mdi-check me-1"></i> Update User
+                            </button>
                         </div>
                     </form>
                 </div>

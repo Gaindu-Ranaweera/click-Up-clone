@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'feature' => \App\Http\Middleware\CheckFeatureAccess::class,
             'role' => \App\Http\Middleware\CheckRole::class,
+            'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
+            'math-challenge' => \App\Http\Middleware\ValidateMathChallenge::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

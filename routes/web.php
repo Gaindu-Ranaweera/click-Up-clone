@@ -11,7 +11,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'prevent-back-history'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
