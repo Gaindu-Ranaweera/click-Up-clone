@@ -74,6 +74,10 @@ class User extends Authenticatable
      */
     public function hasFeature(string $key): bool
     {
+        if ($this->hasRole('super_admin')) {
+            return true;
+        }
+
         return $this->features()
                     ->where('key', $key)
                     ->where('user_features.is_enabled', true)
@@ -95,10 +99,12 @@ class User extends Authenticatable
             return false;
         }
 
-        // permission should be 'can_edit' or 'can_delete'
-        $pivotField = 'can_' . str_replace('can_', '', $permission);
-        return (bool) $feature->pivot->$pivotField;
+        // permission can be 'edit' or 'delete', or 'can_edit', 'can_delete'
+        $field = str_starts_with($permission, 'can_') ? $permission : 'can_' . $permission;
+        
+        return (bool) $feature->pivot->$field;
     }
+
 
     public function hasRole(string $roleName): bool
     {

@@ -85,25 +85,63 @@
 
                         <!-- Module Permissions -->
                         <div class="form-group row mb-4">
-                            <label class="col-sm-3 col-form-label fw-bold">Enable Modules</label>
-                            <div class="col-sm-9 mt-2">
-                                <div class="row">
-                                    @foreach($features as $feature)
-                                    <div class="col-md-6 mb-2">
-                                        <div class="form-check form-check-flat form-check-primary">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" name="features[]" value="{{ $feature->id }}" 
-                                                       {{ in_array($feature->id, $userFeatures) ? 'checked' : '' }}
-                                                       class="form-check-input">
-                                                {{ $feature->name }}
-                                                <i class="input-helper"></i>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                            <label class="col-sm-3 col-form-label fw-bold @error('permissions') text-danger @enderror">Module Permissions</label>
+                            <div class="col-sm-9">
+                                <div class="table-responsive border rounded bg-light p-2">
+                                    <table class="table table-sm table-borderless align-middle mb-0">
+                                        <thead class="text-muted small border-bottom">
+                                            <tr>
+                                                <th style="width: 40%">Module Name</th>
+                                                <th class="text-center">Access</th>
+                                                <th class="text-center">Edit</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($features as $feature)
+                                            @php
+                                                $featurePivot = $user->features->where('id', $feature->id)->first();
+                                            @endphp
+                                            <tr class="module-row">
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="{{ $feature->icon ?? 'mdi mdi-cube-outline' }} me-2 text-primary"></i>
+                                                        <span class="fw-bold">{{ $feature->name }}</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input type="checkbox" name="permissions[{{ $feature->id }}][enabled]" 
+                                                               class="form-check-input access-toggle" value="1"
+                                                               {{ ($featurePivot && $featurePivot->pivot->is_enabled) ? 'checked' : '' }}>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input type="checkbox" name="permissions[{{ $feature->id }}][edit]" 
+                                                               class="form-check-input permission-toggle" value="1"
+                                                               {{ ($featurePivot && $featurePivot->pivot->can_edit) ? 'checked' : '' }}>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input type="checkbox" name="permissions[{{ $feature->id }}][delete]" 
+                                                               class="form-check-input permission-toggle" value="1"
+                                                               {{ ($featurePivot && $featurePivot->pivot->can_delete) ? 'checked' : '' }}>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <small class="text-muted d-block mt-2">
+                                    <i class="mdi mdi-information-outline me-1"></i>
+                                    Enabling <b>Edit</b> or <b>Delete</b> will automatically grant <b>Access</b> to the module.
+                                </small>
                             </div>
                         </div>
+
 
                         <!-- Active Toggle -->
                         <div class="form-group row mb-4">
@@ -131,4 +169,32 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.module-row');
+            
+            rows.forEach(row => {
+                const accessToggle = row.querySelector('.access-toggle');
+                const permissionToggles = row.querySelectorAll('.permission-toggle');
+                
+                permissionToggles.forEach(toggle => {
+                    toggle.addEventListener('change', function() {
+                        if (this.checked) {
+                            accessToggle.checked = true;
+                        }
+                    });
+                });
+
+                accessToggle.addEventListener('change', function() {
+                    if (!this.checked) {
+                        permissionToggles.forEach(toggle => toggle.checked = false);
+                    }
+                });
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>
+

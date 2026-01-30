@@ -47,16 +47,19 @@ class UserManagementController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        // Attach selected features
-        if ($request->has('features')) {
-            foreach ($request->features as $featureId) {
-                $user->features()->attach($featureId, [
-                    'is_enabled' => true,
-                    'can_edit' => true,
-                    'can_delete' => true,
-                ]);
+        // Attach selected features with granular permissions
+        if ($request->has('permissions')) {
+            foreach ($request->permissions as $featureId => $perms) {
+                if (isset($perms['enabled'])) {
+                    $user->features()->attach($featureId, [
+                        'is_enabled' => true,
+                        'can_edit' => isset($perms['edit']),
+                        'can_delete' => isset($perms['delete']),
+                    ]);
+                }
             }
         }
+
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User created successfully.');
@@ -90,18 +93,20 @@ class UserManagementController extends Controller
 
         $user->update($validated);
 
-        // Sync features
+        // Sync features with granular permissions
         $user->features()->detach();
-        if ($request->has('features')) {
-            foreach ($request->features as $featureId) {
-                // We keep defaults (can_edit=true, can_delete=true) for simplified admin creation
-                $user->features()->attach($featureId, [
-                    'is_enabled' => true,
-                    'can_edit' => true,
-                    'can_delete' => true,
-                ]);
+        if ($request->has('permissions')) {
+            foreach ($request->permissions as $featureId => $perms) {
+                if (isset($perms['enabled'])) {
+                    $user->features()->attach($featureId, [
+                        'is_enabled' => true,
+                        'can_edit' => isset($perms['edit']),
+                        'can_delete' => isset($perms['delete']),
+                    ]);
+                }
             }
         }
+
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User updated successfully.');

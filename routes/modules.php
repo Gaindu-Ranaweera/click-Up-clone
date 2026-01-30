@@ -28,8 +28,9 @@ Route::middleware(['feature:module_finance'])->prefix('finance')->name('finance.
     Route::get('/invoices/{invoice}', [\App\Http\Controllers\InvoiceController::class, 'show'])->name('invoices.show');
     Route::get('/invoices/{invoice}/edit', [\App\Http\Controllers\InvoiceController::class, 'edit'])->name('invoices.edit');
     Route::patch('/invoices/{invoice}', [\App\Http\Controllers\InvoiceController::class, 'update'])->name('invoices.update');
-    Route::delete('/invoices/{invoice}', [\App\Http\Controllers\InvoiceController::class, 'destroy'])->name('destroy');
+    Route::delete('/invoices/{invoice}', [\App\Http\Controllers\InvoiceController::class, 'destroy'])->name('invoices.destroy');
     Route::get('/clients/{client}', [\App\Http\Controllers\InvoiceController::class, 'getClientDetails'])->name('clients.details');
+
 });
 
 // Utility Modules

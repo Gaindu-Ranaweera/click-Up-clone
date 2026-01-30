@@ -72,13 +72,14 @@
                                                     <a href="{{ route('finance.invoices.edit', $invoice) }}" class="btn btn-sm btn-outline-warning me-2">Edit</a>
                                                 @endif
 
-                                                @if(auth()->user()->hasRole('super_admin'))
+                                                @if(auth()->user()->hasPermission('module_finance', 'delete'))
                                                     <form action="{{ route('finance.invoices.destroy', $invoice) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this invoice?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                                     </form>
                                                 @endif
+
                                             </div>
                                         </td>
                                     </tr>

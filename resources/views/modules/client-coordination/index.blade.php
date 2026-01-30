@@ -29,7 +29,7 @@
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addFollowupModal-{{ $client->id }}">
                                             <i class="mdi mdi-comment-plus-outline me-2 text-success"></i>Add Follow-up
                                         </button>
-                                        @if(auth()->user()->hasPermission('module_client_coordination', 'can_delete'))
+                                        @if(auth()->user()->hasPermission('module_client_coordination', 'delete'))
                                         <form action="{{ route('client-coordination.destroy', $client) }}" method="POST" onsubmit="return confirm('Delete this client?')">
                                             @csrf
                                             @method('DELETE')
@@ -38,6 +38,7 @@
                                             </button>
                                         </form>
                                         @endif
+
                                     </div>
                                 </div>
                             </div>
