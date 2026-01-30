@@ -25,20 +25,45 @@ class DatabaseSeeder extends Seeder
 
         // 2. Create Core Features
         $featuresList = [
-            ['name' => 'Project Management', 'key' => 'module_projects', 'description' => 'Manage projects and tasks'],
-            ['name' => 'Client Management',  'key' => 'module_clients',  'description' => 'Manage client database'],
-            ['name' => 'HR',                 'key' => 'module_hr',       'description' => 'Human Resources management'],
-            ['name' => 'Salary & Payroll',   'key' => 'module_payroll',  'description' => 'Payroll processing'],
-            ['name' => 'Finance & Revenue',  'key' => 'module_finance',  'description' => 'Finance tracking'],
-            ['name' => 'Client Coordination', 'key' => 'module_client_coordination', 'description' => 'Client Follow-ups & Coordination'],
-            ['name' => 'Notifications',      'key' => 'module_notifications', 'description' => 'System notifications'],
-            ['name' => 'Audit Logs',         'key' => 'module_audit_logs', 'description' => 'View system logs'],
+            [
+                'name' => 'Finance & Revenue',  
+                'key' => 'module_finance',  
+                'description' => 'Finance tracking',
+                'icon' => 'mdi mdi-chart-line',
+                'route_name' => 'finance.index',
+                'is_module' => true
+            ],
+            [
+                'name' => 'Client Coordination', 
+                'key' => 'module_client_coordination', 
+                'description' => 'Client Follow-ups & Coordination',
+                'icon' => 'mdi mdi-account-group',
+                'route_name' => 'client-coordination.index',
+                'is_module' => true
+            ],
+            [
+                'name' => 'Notifications',      
+                'key' => 'module_notifications', 
+                'description' => 'System notifications',
+                'icon' => 'mdi mdi-bell',
+                'route_name' => 'notifications.index',
+                'is_module' => false
+            ],
+            [
+                'name' => 'Audit Logs',         
+                'key' => 'module_audit_logs', 
+                'description' => 'View system logs',
+                'icon' => 'mdi mdi-history',
+                'route_name' => 'admin.activity-logs.index',
+                'is_module' => false
+            ],
         ];
 
         $createdFeatures = [];
         foreach ($featuresList as $f) {
             $createdFeatures[$f['key']] = Feature::create($f);
         }
+
 
         // 3. Create Super Admin
         $superAdmin = User::create([
@@ -80,11 +105,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Grant basic features
-        $userFeatures = ['module_projects', 'module_notifications'];
+        $userFeatures = ['module_notifications'];
         foreach ($userFeatures as $key) {
              if (isset($createdFeatures[$key])) {
                 $user->features()->attach($createdFeatures[$key]->id, ['is_enabled' => true]);
              }
         }
+
     }
 }
