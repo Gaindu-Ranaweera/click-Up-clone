@@ -110,4 +110,12 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->name === $roleName;
     }
+
+    /**
+     * Get clients created by this user.
+     */
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'created_by');
+    }
 }

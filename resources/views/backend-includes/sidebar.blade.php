@@ -6,6 +6,7 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+       
 
         @if(auth()->user()->hasRole('super_admin') || auth()->user()->hasRole('admin'))
         <li class="nav-item nav-category">Administration</li>
@@ -17,7 +18,7 @@
         </li>
         <li class="nav-item {{ Route::is('admin.feature-requests.*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.feature-requests.index') }}">
-                <i class="menu-icon mdi mdi-bell-question"></i>
+                <i class="menu-icon mdi mdi-clipboard-text"></i>
                 <span class="menu-title">Module Requests</span>
             </a>
         </li>

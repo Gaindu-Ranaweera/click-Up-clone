@@ -22,6 +22,8 @@
 
 <!-- inject:css -->
 <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('backend/assets/css/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('backend/assets/css/device.css') }}">
 <!-- endinject -->
 
 <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />

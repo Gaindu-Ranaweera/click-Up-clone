@@ -1,0 +1,184 @@
+/* ================================================
+   Custom Styles - Prefix: cus_gk_
+   ================================================ */
+
+/* Navigation Arrow Buttons (Browser-style back/forward) */
+.cus_gk_nav_buttons {
+  gap: 4px;
+}
+
+.cus_gk_btn_nav_arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--bs-dark);
+  transition: all 0.2s ease;
+}
+
+.cus_gk_btn_nav_arrow:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #000;
+}
+
+.cus_gk_btn_nav_arrow:active {
+  background: rgba(0, 0, 0, 0.12);
+  transform: scale(0.95);
+}
+
+.cus_gk_btn_nav_arrow i {
+  font-size: 20px;
+}
+
+.cus_gk_btn_nav_arrow:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.cus_gk_btn_nav_arrow:disabled:hover {
+  background: transparent;
+}
+
+/* ================================================
+   Client Coordination Filter Styles
+   ================================================ */
+
+.cus_gk_filter_select {
+  border-radius: 8px;
+  border-color: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+}
+
+.cus_gk_filter_select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+.cus_gk_search_input {
+  border-radius: 0 8px 8px 0;
+  border-color: #e0e0e0;
+}
+
+.cus_gk_search_input:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+/* ================================================
+   Tabs Styles
+   ================================================ */
+
+.cus_gk_tabs .nav-link {
+  color: #6c757d;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+}
+
+.cus_gk_tabs .nav-link:hover {
+  color: var(--bs-primary);
+  border-bottom-color: rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.cus_gk_tabs .nav-link.active {
+  color: var(--bs-primary);
+  border-bottom-color: var(--bs-primary);
+  background: transparent;
+}
+
+/* ================================================
+   Color Palette Styles
+   ================================================ */
+
+:root {
+  --cus-gk-color-green: #28a745;
+  --cus-gk-color-yellow: #ffc107;
+  --cus-gk-color-orange: #fd7e14;
+  --cus-gk-color-red: #dc3545;
+  --cus-gk-color-blue: #007bff;
+  --cus-gk-color-purple: #6f42c1;
+}
+
+.cus_gk_color_palette {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cus_gk_color_option {
+  cursor: pointer;
+}
+
+.cus_gk_color_option input[type="radio"] {
+  display: none;
+}
+
+.cus_gk_color_swatch {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.cus_gk_color_option input:checked+.cus_gk_color_swatch {
+  border-color: #333;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cus_gk_color_none {
+  background: #f5f5f5;
+  position: relative;
+}
+
+.cus_gk_color_none::after {
+  content: '✕';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #999;
+  font-size: 14px;
+}
+
+.cus_gk_color_green {
+  background: var(--cus-gk-color-green);
+}
+
+.cus_gk_color_yellow {
+  background: var(--cus-gk-color-yellow);
+}
+
+.cus_gk_color_orange {
+  background: var(--cus-gk-color-orange);
+}
+
+.cus_gk_color_red {
+  background: var(--cus-gk-color-red);
+}
+
+.cus_gk_color_blue {
+  background: var(--cus-gk-color-blue);
+}
+
+.cus_gk_color_purple {
+  background: var(--cus-gk-color-purple);
+}
+
+/* Color Dots (small indicators) */
+.cus_gk_color_dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+}

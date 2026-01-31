@@ -5,12 +5,13 @@
                 <span class="icon-menu"></span>
             </button>
         </div>
+        
         <div>
             <a class="navbar-brand brand-logo" href="{{ route('dashboard') }}">
-                <img src="{{ asset('backend/assets/images/logo.svg') }}" alt="logo" />
+                <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo" />
             </a>
             <a class="navbar-brand brand-logo-mini" href="{{ route('dashboard') }}">
-                <img src="{{ asset('backend/assets/images/logo-mini.svg') }}" alt="logo" />
+                <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo" />
             </a>
         </div>
     </div>
@@ -23,7 +24,19 @@
                 <h3 class="welcome-sub-text">Your performance summary this week</h3>
             </li>
         </ul>
+        
         <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <!-- Browser-style Navigation Buttons -->
+                <div class="cus_gk_nav_buttons d-flex align-items-center me-3">
+                    <button type="button" class="btn cus_gk_btn_nav_arrow" onclick="window.history.back()" title="Go Back">
+                        <i class="mdi mdi-arrow-left"></i>
+                    </button>
+                    <button type="button" class="btn cus_gk_btn_nav_arrow" onclick="window.history.forward()" title="Go Forward">
+                        <i class="mdi mdi-arrow-right"></i>
+                    </button>
+                </div>
+            </li>
             <li class="nav-item d-none d-lg-block">
                 <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
                     <span class="input-group-addon input-group-prepend border-right">

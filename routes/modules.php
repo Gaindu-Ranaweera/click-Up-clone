@@ -19,6 +19,9 @@ Route::middleware(['feature:module_client_coordination'])->prefix('client-coordi
     Route::patch('/{client}', [\App\Http\Controllers\ClientCoordinationController::class, 'update'])->name('update');
     Route::post('/{client}/followup', [\App\Http\Controllers\ClientCoordinationController::class, 'storeFollowup'])->name('followup');
     Route::delete('/{client}', [\App\Http\Controllers\ClientCoordinationController::class, 'destroy'])->name('destroy');
+    Route::post('/{client}/archive', [\App\Http\Controllers\ClientCoordinationController::class, 'archive'])->name('archive');
+    Route::post('/{client}/restore', [\App\Http\Controllers\ClientCoordinationController::class, 'restore'])->name('restore');
+    Route::patch('/{client}/color', [\App\Http\Controllers\ClientCoordinationController::class, 'updateColor'])->name('updateColor');
 });
 
 Route::middleware(['feature:module_finance'])->prefix('finance')->name('finance.')->group(function () {
